@@ -18,7 +18,7 @@ import (
 func metrics(response http.ResponseWriter, request *http.Request) {
     out, err := exec.Command(
         "nvidia-smi",
-        "--query-gpu=name,index,temperature.gpu,utilization.gpu,utilization.memory,memory.total,memory.free,memory.used",
+        "--query-gpu=name,index,temperature.gpu,memory.total,memory.free,memory.used",
         "--format=csv,noheader,nounits").Output()
 
     if err != nil {
@@ -36,8 +36,7 @@ func metrics(response http.ResponseWriter, request *http.Request) {
     }
 
     metricList := []string {
-        "temperature.gpu", "utilization.gpu",
-        "utilization.memory", "memory.total", "memory.free", "memory.used"}
+        "temperature.gpu", "memory.total", "memory.free", "memory.used"}
 
     result := ""
     for _, row := range records {
